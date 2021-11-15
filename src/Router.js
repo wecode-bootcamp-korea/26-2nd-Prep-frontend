@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Nav from './components/Nav/Nav';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
@@ -8,9 +8,9 @@ import DetailPage from './pages/DetailPage/DetailPage';
 import MyPage from './pages/MyPage/MyPage';
 import Footer from './components/Footer/Footer';
 
-export default function App() {
+export default function Router() {
   return (
-    <Router>
+    <BrowserRouter>
       <Nav />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -20,6 +20,6 @@ export default function App() {
         <Route path="/mypage" element={<MyPage />} />
       </Routes>
       <Footer />
-    </Router>
+    </BrowserRouter>
   );
 }

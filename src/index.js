@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Router from './Router';
 import GlobalStyle from './styles/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
@@ -9,7 +9,7 @@ ReactDOM.render(
   <>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
-      <App />
+      <Router />
     </ThemeProvider>
   </>,
   document.getElementById('root')
