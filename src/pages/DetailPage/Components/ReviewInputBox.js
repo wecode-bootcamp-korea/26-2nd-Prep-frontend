@@ -11,8 +11,10 @@ export default function ReviewInputBox() {
       </StarInputWrapper>
       <ReviewInput placeholder="체험에 대한 생생한 후기를 공유해주세요!" />
       <SubmitWrapper>
-        <label>이미지 업로드 (PNG, JPG)</label>
-        <ImageInput type="file" accept="image/jpeg image/png" />
+        <ImageInputLabel htmlFor="ImageInput">
+          이미지 업로드 (PNG, JPG)
+        </ImageInputLabel>
+        <ImageInput id="ImageInput" type="file" accept="image/jpeg image/png" />
         <SubmitBtn>후기 작성</SubmitBtn>
       </SubmitWrapper>
     </ReviewInputWrapper>
@@ -48,25 +50,21 @@ const SubmitWrapper = styled.div`
   position: relative;
   height: 50px;
   border-top: 1px solid ${({ theme }) => theme.subColor};
+`;
 
-  label {
-    position: absolute;
-    left: 0;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    padding: 15px;
-    border-right: 1px solid ${({ theme }) => theme.subColor};
-    font-size: 13px;
-  }
+const ImageInputLabel = styled.label`
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 15px;
+  border-right: 1px solid ${({ theme }) => theme.subColor};
+  font-size: 13px;
 `;
 
 const ImageInput = styled.input`
-  position: absolute;
-  left: 0;
-  width: 165px;
-  height: 100%;
-  opacity: 0;
+  display: none;
 `;
 
 const SubmitBtn = styled.button`

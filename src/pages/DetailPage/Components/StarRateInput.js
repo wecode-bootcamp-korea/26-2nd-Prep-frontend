@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function Review() {
+export default function StarRateInput() {
   return STAR_RATE_DATA.map((starRate, idx) => (
     <React.Fragment key={idx}>
       <StarRate type="radio" name="starRate" />
@@ -20,7 +20,7 @@ const StarImg = styled.img`
 `;
 
 const STAR_RATE_DATA = [
-  { id: '1', img: '/images/회색별들.png' },
+  { id: '1', img: '/images/파란별들.png' },
   { id: '2', img: '/images/회색별들.png' },
   { id: '3', img: '/images/회색별들.png' },
   { id: '4', img: '/images/회색별들.png' },
