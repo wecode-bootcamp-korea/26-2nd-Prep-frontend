@@ -8,11 +8,6 @@ const GlobalStyle = createGlobalStyle`
     box-sizing : border-box;
     cursor: default;
   }
-	
-  html,body,#root{
-    height: 100%;
-  }
-
 `;
 
 export default GlobalStyle;
