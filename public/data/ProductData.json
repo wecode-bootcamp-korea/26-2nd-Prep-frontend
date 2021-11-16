@@ -1,0 +1,13 @@
+[
+  {
+    "productImg": [
+      "https://images.unsplash.com/photo-1636990491570-a003f03ec4d9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=770&q=80",
+      "https://images.unsplash.com/photo-1637092301095-3b8b96717e1b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1548&q=80"
+    ],
+    "productTitle": "[싱싱캠핑] 가을 감성 캠핑에 싱가포르 얹기: 피노키오숲",
+    "discountRate": 26,
+    "originalPrice": 125000,
+    "discountPrice": 170000,
+    "expiry": 30
+  }
+]
