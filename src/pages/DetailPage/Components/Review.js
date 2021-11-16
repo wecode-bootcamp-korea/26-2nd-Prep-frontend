@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { FaRegThumbsUp } from 'react-icons/fa';
+
+const SETTINGS = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+};
 
 export default function Review() {
   const [reviews, setReviews] = useState([]);
+  const [likes, setLikes] = useState(0);
 
   useEffect(() => {
     fetch('data/ReviewData.json')
@@ -14,17 +21,13 @@ export default function Review() {
       .then(res => setReviews(res));
   }, []);
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-  };
+  function handleLikes(numOfLikes) {
+    setLikes(numOfLikes + 1);
+  }
 
-  return (
+  return reviews.length > 0 ? (
     <SliderContainer>
-      <Slider {...settings}>
+      <Slider {...SETTINGS}>
         {reviews.map((review, idx) => (
           <ReviewWrapper key={idx}>
             <ReviewImg alt="product review" src={review.reviewImg} />
@@ -32,16 +35,25 @@ export default function Review() {
               <UserImg alt="user profile" src={review.userImg} />
               <UserName>{review.userName}</UserName>
             </UserInfo>
-            <SelectOption>{review.option}</SelectOption>
+            <SelectedOption>{review.option}</SelectedOption>
             <ReviewBody>{review.review}</ReviewBody>
-            <Likes>
+            <Likes
+              onClick={() => {
+                handleLikes(review.numOfLikes);
+              }}
+            >
               <FaRegThumbsUp />
-              <NumOfLikes>{review.numOfLikes}</NumOfLikes>
+              <NumOfLikes>{likes === 0 ? review.numOfLikes : likes}</NumOfLikes>
             </Likes>
           </ReviewWrapper>
         ))}
       </Slider>
     </SliderContainer>
+  ) : (
+    <BlankReviewWrapper>
+      <BlankReviewTitle>아직 후기가 없어요.</BlankReviewTitle>
+      <BlankReviewText>첫 후기를 남겨주세요!</BlankReviewText>
+    </BlankReviewWrapper>
   );
 }
 
@@ -108,13 +120,20 @@ const UserName = styled.span`
   font-weight: bold;
 `;
 
-const SelectOption = styled.span`
+const SelectedOption = styled.span`
   color: ${({ theme }) => theme.fontColor};
   font-size: 13px;
 `;
+
 const ReviewBody = styled.p`
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  width: 240px;
   margin-top: 10px;
   font-size: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const Likes = styled.button`
@@ -138,3 +157,16 @@ const NumOfLikes = styled.span`
   margin-left: 3px;
   font-size: 15px;
 `;
+
+const BlankReviewWrapper = styled.div`
+  text-align: center;
+  width: 900px;
+`;
+
+const BlankReviewTitle = styled.p`
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const BlankReviewText = styled.p``;

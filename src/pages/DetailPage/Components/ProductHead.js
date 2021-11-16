@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+
+const SETTINGS = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 export default function ProductHead() {
   const [products, setProducts] = useState([]);
@@ -13,30 +19,18 @@ export default function ProductHead() {
       .then(res => setProducts(res));
   }, []);
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
   return products.map((product, idx) => (
     <ProductHeader key={idx}>
-      <Slider {...settings}>
+      <Slider {...SETTINGS}>
         {product.productImg.map((img, idx) => (
-          <React.Fragment key={idx}>
-            <ProductImg alt="product" src={img} />
-          </React.Fragment>
+          <ProductImg key={idx} alt="product" src={img} />
         ))}
       </Slider>
       <ProductInfo>
         <ProductTitle>{product.productTitle}</ProductTitle>
         <Price>
           <DiscountRate>{product.discountRate}%</DiscountRate>
-          <OriginalPrice>
-            {product.originalPrice.toLocaleString()}
-          </OriginalPrice>
+          <span>{product.originalPrice.toLocaleString()}</span>
           <Currency>원</Currency>
           <DiscountPrice>
             {product.discountPrice.toLocaleString()}원
@@ -94,7 +88,7 @@ const ProductInfo = styled.div`
 `;
 
 const ProductTitle = styled.h2`
-  width: 430px;
+  max-width: 430px;
   margin-bottom: 10px;
   font-size: 23px;
   line-height: 28px;
@@ -110,8 +104,6 @@ const DiscountRate = styled.span`
   margin-right: 15px;
   color: red;
 `;
-
-const OriginalPrice = styled.span``;
 
 const Currency = styled.span`
   margin-right: 15px;
