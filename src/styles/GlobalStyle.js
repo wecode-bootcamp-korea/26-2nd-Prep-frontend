@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
 	*{
     box-sizing : border-box;
     cursor: default;
+    font-family: "'Noto Sans KR', sans-serif";
   }
 `;
 
