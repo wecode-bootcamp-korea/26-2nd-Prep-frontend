@@ -14,12 +14,12 @@ export default function Router() {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/users/kakao" element={<Kakao />} />
         <Route path="/main" element={<Main />} />
         <Route path="/categories" element={<ListPage />} />
-        <Route path="/products" element={<DetailPage />} />
+        <Route path="/products/:id" element={<DetailPage />} />
         <Route path="/mypage" element={<MyPage />} />
       </Routes>
       <Footer />
