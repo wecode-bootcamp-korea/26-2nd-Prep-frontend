@@ -1,23 +1,60 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 import '../../styles/theme';
+import Category from './Category';
+import { useNavigate } from 'react-router-dom';
 
 export default function Nav() {
+  const [text, setText] = useState('');
+  const navigate = useNavigate();
+
+  const userToken = localStorage.getItem('token');
+
+  function goToMain() {
+    navigate('/main');
+  }
+
+  const login = useNavigate();
+  function goToLogin() {
+    login('/login');
+  }
+
+  function goToLogOut() {
+    localStorage.removeItem('token');
+    alert('로그아웃 됐어용');
+  }
+
+  const changeText = e => {
+    setText(e.target.value);
+  };
+
+  const searchText = e => {
+    if (e.code === 'Enter' && text) {
+      navigate(`/products?odering=-best_ranking&searching=${text}`);
+      setText('');
+    }
+  };
+
   return (
     <NavBox>
       <WidthBox>
         <CategotyAndSearch>
-          <CategoryBox>
-            <CategoryImg alt="카테고리" src="/images/category.png" />
-            <CategoryText>카테고리</CategoryText>
-          </CategoryBox>
+          <Category />
           <CategoryContour />
-          <Logo alt="logo" src="/images/logo.png" />
-          <LogoTitle className="logoTitle">Prep</LogoTitle>
+          <LogoBox onClick={goToMain}>
+            <Logo alt="logo" src="/images/logo.png" />
+            <LogoTitle className="logoTitle">Prep</LogoTitle>
+          </LogoBox>
           <SearchBox>
             <ReadingGlasses alt="돋보기" src="/images/돋보기.png" />
 
-            <Search type="text" />
+            <Search
+              type="text"
+              value={text}
+              onChange={changeText}
+              onKeyPress={searchText}
+            />
           </SearchBox>
         </CategotyAndSearch>
 
@@ -30,9 +67,15 @@ export default function Nav() {
             <IconImage alt="마이" src="/images/mypage.png" />
             <IconText>마이</IconText>
           </IconBox>
-          <IconBox>
+          <IconBox
+            onClick={
+              !userToken || userToken === 'undefined' ? goToLogin : goToLogOut
+            }
+          >
             <IconImage alt="로그인" src="/images/login.png" />
-            <IconText>로그인</IconText>
+            <IconText>
+              {!userToken || userToken === 'undefined' ? '로그인' : '로그아웃'}
+            </IconText>
           </IconBox>
         </NavIcons>
       </WidthBox>
@@ -44,7 +87,7 @@ const NavBox = styled.nav`
   position: relative;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid ${props => props.theme.subColor};
+  border-bottom: 1px solid rgb(230, 230, 230);
 `;
 
 const WidthBox = styled.div`
@@ -59,29 +102,16 @@ const CategotyAndSearch = styled.div`
   height: 90px;
 `;
 
-const CategoryBox = styled.div`
-  display: column;
-  text-align: center;
-  margin-left: 10px;
-  margin-right: 13px;
-  width: 100px;
-  height: 40px;
-`;
-
-const CategoryImg = styled.img`
-  width: 35px;
-  height: 35px;
-`;
-
-const CategoryText = styled.p`
-  font-size: 0.7rem;
-`;
-
 const CategoryContour = styled.img`
   margin-right: 30px;
-  height: 50px;
+  height: 40px;
   border: white;
   border-left: rgb(230, 230, 230) 1px solid;
+`;
+
+const LogoBox = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Logo = styled.img`
@@ -104,9 +134,9 @@ const SearchBox = styled.div`
 `;
 
 const ReadingGlasses = styled.img`
+  position: absolute;
   margin-top: 11px;
   margin-left: 10px;
-  position: absolute;
   width: 20px;
   height: 20px;
 `;
@@ -115,7 +145,7 @@ const Search = styled.input`
   padding-left: 40px;
   margin-top: 4px;
   margin-right: 15px;
-  width: 100%;
+  width: 95%;
   height: 37px;
   border-radius: 30px;
   border: none;
@@ -125,7 +155,7 @@ const Search = styled.input`
 const NavIcons = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 20%;
 `;
 
