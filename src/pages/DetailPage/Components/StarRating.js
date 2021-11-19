@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-export default function StarRating() {
-  const [rates, setRates] = useState([]);
-
-  useEffect(() => {
-    fetch('data/StarRate.json')
-      .then(res => res.json())
-      .then(res => setRates(res));
-  }, []);
-
-  return rates.map((rate, idx) => (
-    <React.Fragment key={idx}>
+export default function StarRating({ productInfo, option }) {
+  return (
+    <>
       <StarRate>
         <StarImg alt="star rating" src="/images/회색별들.png" />
-        <ColoredStarBox width={rate.ratingNum * 20}>
+        <ColoredStarBox width={productInfo.average_rating * 20}>
           <StarImgColored alt="star rating" src="/images/파란별들.png" />
         </ColoredStarBox>
-        <RatingNum>{rate.ratingNum}</RatingNum>
+        <RatingNum>
+          {Number(productInfo.average_rating).toLocaleString()}
+        </RatingNum>
         <Bullet>&bull;</Bullet>
-        <NumOfReviews>{rate.numOfReviews}개 후기</NumOfReviews>
+        <NumOfReviews>{option.review_count}개 후기</NumOfReviews>
       </StarRate>
       <RateDescription>
-        경험한 대원의 {rate.percentage}%가 5점을 줬어요!
+        경험한 대원의 {option.stars_percent}%가 5점을 줬어요!
       </RateDescription>
-    </React.Fragment>
-  ));
+    </>
+  );
 }
 
 const StarRate = styled.section`

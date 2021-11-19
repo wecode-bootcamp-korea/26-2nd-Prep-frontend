@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { API } from '../../../config';
 import Slider from 'react-slick';
 import { FaRegThumbsUp } from 'react-icons/fa';
 
@@ -13,46 +15,66 @@ const SETTINGS = {
 
 export default function Review() {
   const [reviews, setReviews] = useState([]);
-  const [likes, setLikes] = useState(0);
+  const { id } = useParams();
 
   useEffect(() => {
-    fetch('data/ReviewData.json')
+    fetch(`${API}/reviews/review?product_id=${id}`)
       .then(res => res.json())
-      .then(res => setReviews(res));
-  }, []);
+      .then(res => setReviews(res.results));
+  }, [id]);
 
-  function handleLikes(numOfLikes) {
-    setLikes(numOfLikes + 1);
+  function handleLikes(id) {
+    fetch(`${API}/reviews/review/like`, {
+      method: 'POST',
+      headers: {
+        Authorization: localStorage.getItem('token'),
+      },
+      body: JSON.stringify({
+        review_id: id,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        const newData = reviews.map(review => {
+          if (id === review.id) {
+            return { ...review, likes: res.results.likes };
+          } else {
+            return review;
+          }
+        });
+
+        setReviews(newData);
+      });
   }
-
   return reviews.length > 0 ? (
     <SliderContainer>
       <Slider {...SETTINGS}>
-        {reviews.map((review, idx) => (
-          <ReviewWrapper key={idx}>
-            <ReviewImg alt="product review" src={review.reviewImg} />
-            <UserInfo>
-              <UserImg alt="user profile" src={review.userImg} />
-              <UserName>{review.userName}</UserName>
-            </UserInfo>
-            <SelectedOption>{review.option}</SelectedOption>
-            <ReviewBody>{review.review}</ReviewBody>
-            <Likes
-              onClick={() => {
-                handleLikes(review.numOfLikes);
-              }}
-            >
-              <FaRegThumbsUp />
-              <NumOfLikes>{likes === 0 ? review.numOfLikes : likes}</NumOfLikes>
-            </Likes>
-          </ReviewWrapper>
-        ))}
+        {reviews.length > 0 &&
+          reviews.map(review => (
+            <ReviewWrapper key={review.id}>
+              <ReviewImg alt="product review" src={review.review_image} />
+              <UserInfo>
+                <UserImg alt="user profile" src={review.user_profile_image} />
+                <UserName>{review.user_nickname}</UserName>
+              </UserInfo>
+              <SelectedOption>{review.option_name}</SelectedOption>
+              <ReviewBody>{review.comment}</ReviewBody>
+              <Likes
+                onClick={() => {
+                  handleLikes(review.id);
+                }}
+              >
+                <FaRegThumbsUp />
+                <NumOfLikes>{review.likes}</NumOfLikes>
+              </Likes>
+            </ReviewWrapper>
+          ))}
       </Slider>
     </SliderContainer>
   ) : (
     <BlankReviewWrapper>
       <BlankReviewTitle>아직 후기가 없어요.</BlankReviewTitle>
-      <BlankReviewText>첫 후기를 남겨주세요!</BlankReviewText>
+      <p>처음으로 후기를 남겨주세요!</p>
     </BlankReviewWrapper>
   );
 }
@@ -168,5 +190,3 @@ const BlankReviewTitle = styled.p`
   font-size: 18px;
   font-weight: bold;
 `;
-
-const BlankReviewText = styled.p``;
