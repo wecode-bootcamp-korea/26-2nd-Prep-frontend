@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 
@@ -10,36 +10,30 @@ const SETTINGS = {
   slidesToScroll: 1,
 };
 
-export default function ProductHead() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    fetch('data/ProductData.json')
-      .then(res => res.json())
-      .then(res => setProducts(res));
-  }, []);
-
-  return products.map((product, idx) => (
-    <ProductHeader key={idx}>
+export default function ProductHead({ productInfo, option }) {
+  return (
+    <ProductHeader>
       <Slider {...SETTINGS}>
-        {product.productImg.map((img, idx) => (
+        {productInfo.product_image_url.map((img, idx) => (
           <ProductImg key={idx} alt="product" src={img} />
         ))}
       </Slider>
       <ProductInfo>
-        <ProductTitle>{product.productTitle}</ProductTitle>
+        <ProductTitle>{productInfo.name}</ProductTitle>
         <Price>
-          <DiscountRate>{product.discountRate}%</DiscountRate>
-          <span>{product.originalPrice.toLocaleString()}</span>
+          <DiscountRate>{Math.floor(option.discount_rate)}%</DiscountRate>
+          <span>{Number(option.price).toLocaleString()}</span>
           <Currency>원</Currency>
           <DiscountPrice>
-            {product.discountPrice.toLocaleString()}원
+            {Number(option.discounted_price).toLocaleString()}원
           </DiscountPrice>
         </Price>
-        <ExpiryDate>유효기간: 구매일로부터 {product.expiry}일까지</ExpiryDate>
+        <ExpiryDate>
+          유효기간: 구매일로부터 {productInfo.expiration_date}일까지
+        </ExpiryDate>
       </ProductInfo>
     </ProductHeader>
-  ));
+  );
 }
 
 const ProductHeader = styled.section`

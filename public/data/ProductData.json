@@ -1,13 +1,50 @@
-[
-  {
-    "productImg": [
-      "https://images.unsplash.com/photo-1636990491570-a003f03ec4d9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=770&q=80",
-      "https://images.unsplash.com/photo-1637092301095-3b8b96717e1b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1548&q=80"
+{
+  "message": {
+    "option_list": [
+      {
+        "discount_rate": "0.000",
+        "discounted_price": "159000.00",
+        "limited_quantity": 24,
+        "price": "159000.000",
+        "review_count": 2,
+        "stars_percent": 50.0
+      },
+      {
+        "date": "2021-12-02T18:00:00Z",
+        "discount_rate": "0.000",
+        "discounted_price": "159000.00",
+        "limited_quantity": 24,
+        "name": "참가비(1인)",
+        "price": "159000.000",
+        "review_count": 3,
+        "reviews_list": [
+          {
+            "comment": "good!",
+            "star_rate": "4.0"
+          },
+          {
+            "comment": "good!",
+            "star_rate": "3.0"
+          },
+          {
+            "comment": "good!",
+            "star_rate": "3.0"
+          }
+        ],
+        "stars_percent": 0.0
+      }
     ],
-    "productTitle": "[싱싱캠핑] 가을 감성 캠핑에 싱가포르 얹기: 피노키오숲",
-    "discountRate": 26,
-    "originalPrice": 125000,
-    "discountPrice": 170000,
-    "expiry": 30
+    "product_info": {
+      "address": "서울",
+      "average_rating": "3.80000",
+      "expiration_date": "30",
+      "name": "[2030] 국내최초 1박2일 불멍스키 혼펜_따로 또 같이",
+      "product_image_url": [
+        "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
+        "https://images.unsplash.com/photo-1637740000677-12a6d7ddc801?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+      ],
+      "tag": ["new"],
+      "description": "블라블라블라"
+    }
   }
-]
+}

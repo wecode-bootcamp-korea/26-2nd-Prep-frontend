@@ -1,27 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { API } from '../../config';
 import ProductHead from './Components/ProductHead';
 import StarRating from './Components/StarRating';
 import Review from './Components/Review';
 import ReviewInputBox from './Components/ReviewInputBox';
-// import { IoIosArrowUp } from 'react-icons/ios';
+import { IoIosArrowUp } from 'react-icons/io';
 
 export default function DetailPage() {
+  const [products, setProducts] = useState({
+    productInfo: {},
+    option: {},
+  });
+  const [scrollPosition, setScrollPosition] = useState();
+  const { id } = useParams();
+  const topBtnRef = useRef();
+
+  useEffect(() => {
+    fetch(`${API}/products/${id}`)
+      .then(res => res.json())
+      .then(res => {
+        setProducts({
+          productInfo: res.message.product_info,
+          option: res.message.option_list[0],
+        });
+      });
+  }, [id]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+  }, [scrollPosition]);
+
+  function handleScroll() {
+    setScrollPosition(window.scrollY);
+  }
+
+  function moveToTop(ref) {
+    ref.current.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  if (!Object.keys(products.option).length) return <>Loading...</>;
+  const { productInfo, option } = products;
+
   return (
-    <DetailPageWrapper>
-      <ProductHead />
-      <StarRating />
+    <DetailPageWrapper ref={topBtnRef}>
+      <ProductHead productInfo={productInfo} option={option} />
+
+      <StarRating productInfo={productInfo} option={option} />
       <ReviewsSection>
         <Review />
       </ReviewsSection>
       <ReviewInputBox />
       <ProductBody>
         <BodyTitle>프렙 소개</BodyTitle>
-        <BodyDescription>블라블라블라</BodyDescription>
+        <BodyDescription>{productInfo.description}</BodyDescription>
       </ProductBody>
-      {/* <TopBtn>
+      <TopBtn
+        type="button"
+        onClick={() => moveToTop(topBtnRef)}
+        position={scrollPosition}
+      >
         <IoIosArrowUp />
-      </TopBtn> */}
+      </TopBtn>
     </DetailPageWrapper>
   );
 }
@@ -51,18 +92,21 @@ const BodyTitle = styled.h2`
   font-weight: bold;
 `;
 
-const BodyDescription = styled.p`
+const BodyDescription = styled.div`
   margin: 0 20px;
 `;
 
-// const TopBtn = styled.button`
-//   display: fixed;
-//   position: absolute;
-//   bottom: 30px;
-//   right: 30px;
-
-//   i {
-//     width: 150px;
-//     height: 150px;
-//   }
-// `;
+const TopBtn = styled.button`
+  position: fixed;
+  right: 20%;
+  bottom: 20%;
+  width: 30px;
+  height: 30px;
+  border: 1px solid lightgrey;
+  border-radius: 100%;
+  background-color: white;
+  box-shadow: 1px 1px 3px lightgrey;
+  opacity: ${props => (props.position > 250 ? 1 : 0)};
+  transition-duration: 200ms;
+  z-index: 100;
+`;
