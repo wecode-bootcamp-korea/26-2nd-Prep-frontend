@@ -22,10 +22,10 @@ export default function ProductHead({ productInfo, option }) {
         <ProductTitle>{productInfo.name}</ProductTitle>
         <Price>
           <DiscountRate>{Math.floor(option.discount_rate)}%</DiscountRate>
-          <span>{Number(option.price).toLocaleString()}</span>
+          <span>{Number(option.discounted_price).toLocaleString()}</span>
           <Currency>원</Currency>
           <DiscountPrice>
-            {Number(option.discounted_price).toLocaleString()}원
+            {Number(option.price).toLocaleString()}원
           </DiscountPrice>
         </Price>
         <ExpiryDate>

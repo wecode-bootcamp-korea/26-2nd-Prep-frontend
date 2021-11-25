@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import '../../styles/theme';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
-export default function Main() {
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    fetch('http://10.58.3.54:8000/mainimages')
-      .then(res => res.json())
-      .then(data => setImages(data));
-  }, []);
-
+export default function Main({ images }) {
   const settings = {
     dots: true,
     infinite: true,
@@ -21,7 +11,7 @@ export default function Main() {
     slidesToScroll: 1,
     autoplay: true,
     speed: 300,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 2000,
     cssEase: 'linear',
   };
 
@@ -29,9 +19,9 @@ export default function Main() {
     <div>
       <SlideBox>
         <Slider {...settings}>
-          {images.results &&
-            images.results.map((ele, index) => {
-              return <Image1 key={index} alt="이미지" src={ele.image_url} />;
+          {images.length > 0 &&
+            images.map(ele => {
+              return <Image1 key={ele.id} alt="이미지" src={ele.image_url} />;
             })}
         </Slider>
       </SlideBox>

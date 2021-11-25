@@ -12,7 +12,7 @@ export default function Nav() {
   const userToken = localStorage.getItem('token');
 
   function goToMain() {
-    navigate('/main');
+    navigate('/');
   }
 
   const login = useNavigate();
@@ -23,6 +23,7 @@ export default function Nav() {
   function goToLogOut() {
     localStorage.removeItem('token');
     alert('로그아웃 됐어용');
+    goToMain();
   }
 
   const changeText = e => {

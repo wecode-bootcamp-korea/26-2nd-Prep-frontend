@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API } from '../../config';
 import styled from 'styled-components';
 import '../../styles/theme';
 
@@ -8,7 +9,7 @@ export default function Modal() {
   const [categories, setcategories] = useState([]);
 
   useEffect(() => {
-    fetch('http://10.58.3.54:8000/categories')
+    fetch(`${API.category}`)
       .then(res => res.json())
       .then(data => setcategories(data));
   }, []);

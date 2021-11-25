@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { API } from '../../config';
 import { CLIENT_ID, REDIRECT_URI } from './OAuth';
 
 export default function Kakao(props) {
@@ -7,27 +8,27 @@ export default function Kakao(props) {
   const code = searchParams.toString('=');
   const navigate = useNavigate();
 
-  const goToMain = () => {
-    navigate('/main');
-  };
-
   useEffect(() => {
+    const goToMain = () => {
+      navigate('/');
+    };
+
     const getAccessToken = accessToken => {
-      fetch('http://10.58.2.185:8000/users/kakao', {
+      fetch(`${API.login}`, {
         headers: {
           Authorization: accessToken,
         },
       })
         .then(res => res.json())
         .then(data => {
-          localStorage.setItem('token', accessToken);
+          localStorage.setItem('token', data.Token);
           goToMain();
         });
     };
 
     const KakaoLogin = () => {
       fetch(
-        `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&'${code}'`
+        `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&${code}`
       )
         .then(res => res.json())
         .then(data => {
@@ -40,7 +41,7 @@ export default function Kakao(props) {
     };
 
     KakaoLogin();
-  }, [code, goToMain]);
+  }, [code, navigate]);
 
   return <div />;
 }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { API } from '../../config';
 import '../../styles/theme';
 import ImageSlide from './ImageSlide';
 import BestProducts from './BestProducts';
@@ -8,7 +9,15 @@ import ReviewProducts from './ReviewProducts';
 import { useNavigate } from 'react-router-dom';
 
 export default function Main() {
+  const [images, setImages] = useState([]);
   const goList = useNavigate();
+
+  useEffect(() => {
+    fetch(`${API.mainSlideImg}`)
+      .then(res => res.json())
+      .then(data => setImages(data.results));
+  }, []);
+
   function goToList() {
     goList('/products?category_id=1&ordering=-best_ranking');
   }
@@ -16,7 +25,7 @@ export default function Main() {
   return (
     <MainBox>
       <WidthBox>
-        <ImageSlide />
+        <ImageSlide images={images} />
         <SubCategorys>
           {subCategoryElements.map((ele, index) => {
             return (
@@ -38,6 +47,7 @@ export default function Main() {
 const MainBox = styled.div`
   height: 100%;
   margin-top: 30px;
+  margin-bottom: 60px;
 `;
 
 const WidthBox = styled.div`

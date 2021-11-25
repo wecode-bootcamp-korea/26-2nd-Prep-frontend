@@ -18,7 +18,7 @@ export default function DetailPage() {
   const topBtnRef = useRef();
 
   useEffect(() => {
-    fetch(`${API}/products/${id}`)
+    fetch(`${API.product}/${id}`)
       .then(res => res.json())
       .then(res => {
         setProducts({
