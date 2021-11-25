@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API } from '../../config';
 import styled from 'styled-components';
 import '../../styles/theme';
 
@@ -8,13 +9,13 @@ export default function ReviewProducts() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://10.58.3.54:8000/products?ordering=-review_count')
+    fetch(`${API.product}?ordering=-review_count`)
       .then(res => res.json())
       .then(data => setReviewProduct(data));
   }, []);
 
   const goToDetailPage = id => {
-    navigate(`/proudcts/${id}`);
+    navigate(`/products/${id}`);
   };
 
   const goList = useNavigate();

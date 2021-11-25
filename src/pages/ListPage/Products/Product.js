@@ -19,7 +19,7 @@ export default function Product({
   };
 
   const goToDetailPage = id => {
-    navigate(`/proudcts/${id}`);
+    navigate(`/products/${id}`);
   };
 
   return (
@@ -57,6 +57,7 @@ const ProductImg = styled.img`
   height: 210px;
   border-radius: 8px;
   cursor: pointer;
+  object-fit: cover;
 `;
 
 const ProductTitle = styled.h3`

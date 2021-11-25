@@ -45,7 +45,7 @@ export default function ReviewInputBox() {
     formData.append('comment', reviewDescription);
     formData.append('option_id', 1);
 
-    fetch(`${API}/reviews/review`, {
+    fetch(`${API.reviews}/review`, {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('token'),

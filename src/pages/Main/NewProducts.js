@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API } from '../../config';
 import styled from 'styled-components';
 import '../../styles/theme';
 
@@ -8,13 +9,13 @@ export default function BestProducts() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://10.58.3.54:8000/products?ordering=-latest_update')
+    fetch(`${API.product}?ordering=-latest_update`)
       .then(res => res.json())
       .then(data => setnewProduct(data));
   }, []);
 
   const goToDetailPage = id => {
-    navigate(`/proudcts/${id}`);
+    navigate(`/products/${id}`);
   };
 
   const goNew = useNavigate();

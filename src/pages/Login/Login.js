@@ -54,6 +54,7 @@ const KakaoButton = styled.a`
 `;
 
 const KakaoImage = styled.img`
+  margin-top: 30px;
   src: url(${props => props.src});
   width: 180px;
 `;

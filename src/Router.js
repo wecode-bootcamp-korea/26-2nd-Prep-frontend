@@ -17,7 +17,6 @@ export default function Router() {
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/users/kakao" element={<Kakao />} />
-        <Route path="/main" element={<Main />} />
         <Route path="/products" element={<ListPage />} />
         <Route path="/products/:id" element={<DetailPage />} />
         <Route path="/mypage" element={<MyPage />} />

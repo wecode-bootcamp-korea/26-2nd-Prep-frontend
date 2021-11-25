@@ -18,13 +18,13 @@ export default function Review() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`${API}/reviews/review?product_id=${id}`)
+    fetch(`${API.reviews}/review?product_id=${id}`)
       .then(res => res.json())
       .then(res => setReviews(res.results));
   }, [id]);
 
   function handleLikes(id) {
-    fetch(`${API}/reviews/review/like`, {
+    fetch(`${API.reviews}/review/like`, {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('token'),
@@ -46,6 +46,7 @@ export default function Review() {
         setReviews(newData);
       });
   }
+
   return reviews.length > 0 ? (
     <SliderContainer>
       <Slider {...SETTINGS}>

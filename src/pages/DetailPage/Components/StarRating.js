@@ -16,7 +16,7 @@ export default function StarRating({ productInfo, option }) {
         <NumOfReviews>{option.review_count}개 후기</NumOfReviews>
       </StarRate>
       <RateDescription>
-        경험한 대원의 {option.stars_percent}%가 5점을 줬어요!
+        경험한 대원의 {Math.floor(option.stars_percent)}%가 5점을 줬어요!
       </RateDescription>
     </>
   );
