@@ -1,4 +1,4 @@
-const BASE_URL = 'http://3.36.78.159:8000';
+const BASE_URL = 'http://3.38.192.82:8000';
 
 export const API = {
   mainSlideImg: `${BASE_URL}/mainimages`,
